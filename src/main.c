@@ -12,7 +12,7 @@
 #define WINDOW_WIDTH 1600
 #define WINDOW_HEIGHT 900
 
-# define M_PI		3.14159265358979323846	/* pi */
+#define M_PI 3.14159265358979323846 /* pi */
 
 GLFWwindow *window_create(const uint window_width, const uint window_height, const char *window_name);
 
