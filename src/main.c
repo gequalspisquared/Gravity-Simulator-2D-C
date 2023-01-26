@@ -6,7 +6,8 @@
 #include <GLFW/glfw3.h>
 
 #include "gravity_simulator.h"
-#include "nila/nila.h"
+// #include "nila/nila.h"
+#include <cglm/cglm.h>
 #include "shader.h"
 
 #define WINDOW_WIDTH 1600
@@ -16,18 +17,21 @@
 
 GLFWwindow *window_create(const uint window_width, const uint window_height, const char *window_name);
 
-void draw_circle_2d(nla_vec2 pos, float radius);
+void draw_circle_2d(vec2 pos, float radius);
 
 int main()
 {
     GLFWwindow *window = window_create(WINDOW_WIDTH, WINDOW_HEIGHT, "2D Gravity Simulator");
 
     /* Testing vector stuff */
-    nla_vec2 v1 = {};
-    nla_vec2 v2 = {1.0f, 2.0f};
-    nla_vec2 v3 = {}; 
-    nla_vec2_add(v1, v2, v3);
-    printf("v = {%0.1f, %0.1f}\n", v3[0], v3[1]);
+    // nla_vec2 v1 = {};
+    // nla_vec2 v2 = {1.0f, 2.0f};
+    // nla_vec2 v3 = {}; 
+    // nla_vec2_add(v1, v2, v3);
+    // printf("v = {%0.1f, %0.1f}\n", v3[0], v3[1]);
+    vec2 v = {};
+
+    mat4 ortho; glm_ortho(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT, 0.1f, 100.0f, ortho);
 
     /* Create simple shader for drawing circle */
     Shader shader_circle = shader_create("../res/shaders/circle.vs", "../res/shaders/circle.fs");
@@ -37,7 +41,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader_run(shader_circle);
-        draw_circle_2d(v1, 1.0f);
+        draw_circle_2d(v, 0.5f);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -77,10 +81,10 @@ GLFWwindow *window_create(const uint window_width, const uint window_height, con
     return window;
 }
 
-void draw_circle_2d(nla_vec2 pos, float radius)
+void draw_circle_2d(vec2 pos, float radius)
 {
-    const number_of_segments = 36;
-    const number_of_vertices = number_of_segments + 2;
+    const uint number_of_segments = 36;
+    const uint number_of_vertices = number_of_segments + 2;
     const double two_pi = 2.0 * M_PI;
     const float x = pos[0];
     const float y = pos[1];
@@ -95,8 +99,8 @@ void draw_circle_2d(nla_vec2 pos, float radius)
     circle_vertices_y[0] = y;
 
     for (i = 1; i < number_of_vertices; i++) {
-        circle_vertices_x[i] = x + (radius * cos(i*number_of_segments / two_pi));
-        circle_vertices_y[i] = y + (radius * sin(i*number_of_segments / two_pi));
+        circle_vertices_x[i] = x + (radius * cos(i*two_pi / number_of_segments));
+        circle_vertices_y[i] = y + (radius * sin(i*two_pi / number_of_segments));
     }
 
     float circle_vertices[number_of_vertices*2];

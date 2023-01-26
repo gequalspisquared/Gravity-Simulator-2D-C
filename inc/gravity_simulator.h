@@ -3,4 +3,6 @@
 
 typedef unsigned int uint;
 
+#include <cglm/cglm.h>
+
 #endif

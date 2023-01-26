@@ -12,16 +12,19 @@ OUTPUT := game
 SFML_DIR := .
 
 # compiler and linker flags
-CXX_FLAGS := -O3 -std=c89
+CXX_FLAGS := -O3 -std=c99 -Ilibs/cglm/include
 INCLUDES  := -I./inc
-LDFLAGS   := -O3 -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -lm
+LDFLAGS   := -O3 -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -lm libs/cglm/libcglm.a
 
 # the source files for the ecs game engine
 SRC_FILES := $(wildcard src/*.c src/**/*.c)
 OBJ_FILES := $(SRC_FILES:.c=.o)
 
 # all of these targets will be made if you just type make
-all:$(OUTPUT)
+all: libs $(OUTPUT)
+
+libs: 
+	cd libs/cglm && cmake . -DCGLM_STATIC=ON && make
 
 # define the main executable requirements / command
 $(OUTPUT): $(OBJ_FILES) Makefile

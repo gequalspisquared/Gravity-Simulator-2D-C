@@ -108,3 +108,13 @@ void shader_set_float(const Shader shader, const char *name, float value)
 {
     glUniform1f(glGetUniformLocation(shader, name), value);
 }
+
+void shader_set_vec2_vec2(const Shader shader, const char *name, const vec2 value)
+{
+    glUniform2fv(glGetUniformLocation(shader, name), 1, value);
+}
+
+void shader_set_vec2(const Shader shader, const char *name, float x, float y)
+{
+    glUniform2f(glGetUniformLocation(shader, name), x, y);
+}
