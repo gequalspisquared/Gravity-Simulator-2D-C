@@ -112,11 +112,11 @@ void draw_circle_2d(nla_vec2 pos, float radius)
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(circle_vertices), circle_vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0); 
     glBindVertexArray(0);
 
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, number_of_vertices);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, number_of_vertices);
 }
