@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <assert.h>
 
 #include "shader.h"
 
@@ -49,7 +51,7 @@ static Shader _shader_compile(const char *shader_path, GLenum shader_type)
     GLint compiled;
     glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
 
-    // Check OpenGL logs if compilation failed
+    /* Check OpenGL logs if compilation failed */
     if (compiled == 0) {
         _shader_log_and_fail(handle, "compiling", shader_path, glGetShaderInfoLog, glGetShaderiv);
     }
@@ -102,7 +104,7 @@ void shader_set_int(const Shader shader, const char *name, int value)
     glUniform1i(glGetUniformLocation(shader, name), value);
 }
 
-void shader_set_int(const Shader shader, const char *name, float value)
+void shader_set_float(const Shader shader, const char *name, float value)
 {
     glUniform1f(glGetUniformLocation(shader, name), value);
 }
