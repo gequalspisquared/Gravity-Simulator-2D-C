@@ -9,6 +9,7 @@
 #define NLA_NILA_H
 
 #include "types.h"
+#include "vec2.h"
 #include "vec3.h"
 
 #endif

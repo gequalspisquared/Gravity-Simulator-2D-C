@@ -14,7 +14,7 @@ SFML_DIR := .
 # compiler and linker flags
 CXX_FLAGS := -O3 -std=c89
 INCLUDES  := -I./inc
-LDFLAGS   := -O3 -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+LDFLAGS   := -O3 -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -lm
 
 # the source files for the ecs game engine
 SRC_FILES := $(wildcard src/*.c src/**/*.c)
