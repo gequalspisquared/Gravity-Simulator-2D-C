@@ -31,7 +31,16 @@ int main()
     // printf("v = {%0.1f, %0.1f}\n", v3[0], v3[1]);
     vec2 v = {};
 
-    mat4 ortho; glm_ortho(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT, 0.1f, 100.0f, ortho);
+    mat4 ortho; glm_ortho(-WINDOW_WIDTH / 2.0f, WINDOW_WIDTH / 2.0f, -WINDOW_HEIGHT / 2.0f, WINDOW_HEIGHT / 2.0f, -0.1f, 100.0f, ortho);
+
+    // mat4 view;  glm_mat4_identity(view);
+    vec3 camera_pos = {0.0f, 0.0f, 1.0f};
+    vec3 camera_front = {0.0f, 0.0f, -1.0f};
+    vec3 camera_up = {0.0f, 1.0f, 0.0f};
+    vec3 camera_center; glm_vec3_add(camera_pos, camera_front, camera_center);
+    mat4 view; glm_lookat(camera_pos, camera_center, camera_up, view);
+
+    mat4 model; glm_mat4_identity(model);
 
     /* Create simple shader for drawing circle */
     Shader shader_circle = shader_create("../res/shaders/circle.vs", "../res/shaders/circle.fs");
@@ -41,7 +50,11 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader_run(shader_circle);
-        draw_circle_2d(v, 0.5f);
+        shader_set_mat4(shader_circle, "projection", ortho);
+        shader_set_mat4(shader_circle, "view", view);
+        shader_set_mat4(shader_circle, "model", model);
+        // vec2 v1 = {WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f};
+        draw_circle_2d(v, 100.0f);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
